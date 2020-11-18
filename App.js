@@ -1,53 +1,68 @@
-/* eslint-disable prettier/prettier */
-import React, {Component} from 'react';
-import {Text, StyleSheet, View,Button} from 'react-native';
+import React from 'react';
+import {StyleSheet, Text, View, FlatList, SafeAreaView, TouchableNativeFeedback} from 'react-native';
 
-export default class App extends Component {
+import data from "./src/data/exampleData"
 
-  state = {
-    myText: 0.32,
-  }
+class App extends React.Component {
+    renderListItem = ({item, index}) => {
+        return(
+           <TouchableNativeFeedback>
+               <View
+                   style={{
+                       backgroundColor: 'rgba(255,255,255,0.5)',
+                       marginBottom: 10,
+                       marginRight: 7,
+                       borderRadius: 5,
+                       flex: 1,
+                       flexDirection: 'row',
+                       marginLeft: 7,
+                   }}>
 
-  fuckThis = () => {
-    this.setState({
-      myText: this.state.myText *2,
-    });
-  }
+                   <View style={{
+                       width:36,
+                       height:36,
+                       margin: 5,
+                       justifySelf: 'center',
+                       alignSelf: 'center',
+                       justifyContent: 'center',
+                       alignItems:'center',
+                       backgroundColor: 'rgba(0,0,0,0.3)',
+                       borderRadius: 50,
+                   }}>
+                       <Text style={{fontSize:24,color:'#fff'}}>{item.name.charAt(0)}</Text>
+                   </View>
 
-  decreaseThis = () => {
-    this.setState({
-      myText: this.state.myText /2,
-    });
-  }
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.bruhMoment}> {this.state.myText} </Text>
-        <Button 
-        title='Increase' 
-        onPress={this.fuckThis} />
+                   <View style={{flexDirection:'column', margin:5}}>
 
-        <View style={{margin:10}}>
-           <Button 
-        title='decrease'
-        onPress={this.decreaseThis} />
-        </View>
-      </View>
-    );
-  }
+                       <Text style={{fontSize:16,}}>{item.name}</Text>
+                       <Text>{item.age}</Text>
+                       <Text>{item.city}</Text>
+                   </View>
+
+               </View>
+
+           </TouchableNativeFeedback>
+        );
+    };
+
+    render() {
+        return (
+            <SafeAreaView style={styles.container}>
+                <FlatList
+                    renderItem={this.renderListItem}
+                    keyExtractor={(item,index) => index.toString()}
+                    data={data}
+                />
+            </SafeAreaView>);
+    }
 }
+
+export default App;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#584',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
-    bruhMoment: {
-        fontSize: 50,
-        color: '#FFFFFF',
+        flex:1,
+        backgroundColor: '#6b65ee',
     },
 });
